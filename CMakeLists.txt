@@ -57,7 +57,7 @@ if (ENABLE_SANITIZER)
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=${ENABLE_SANITIZER}")
 endif ()
 
-add_library(lzfse
+add_darling_static_library(lzfse FAT SOURCES
   src/lzfse_decode.c
   src/lzfse_decode_base.c
   src/lzfse_encode.c
@@ -67,7 +67,7 @@ add_library(lzfse
   src/lzvn_encode_base.c)
 lzfse_add_compiler_flags(lzfse -Wall -Wno-unknown-pragmas -Wno-unused-variable)
 
-add_executable(lzfse_cli
+add_darling_executable(lzfse_cli
   src/lzfse_main.c)
 target_link_libraries(lzfse_cli lzfse)
 set_target_properties(lzfse_cli PROPERTIES OUTPUT_NAME lzfse)
@@ -81,10 +81,10 @@ else()
   set_property(TARGET lzfse_cli PROPERTY C_STANDARD 99)
 endif()
 
-set_target_properties(lzfse PROPERTIES
-  POSITION_INDEPENDENT_CODE TRUE
-  C_VISIBILITY_PRESET hidden
-  INTERPROCEDURAL_OPTIMIZATION TRUE)
+#set_target_properties(lzfse PROPERTIES
+	#POSITION_INDEPENDENT_CODE TRUE
+	#C_VISIBILITY_PRESET hidden
+	#INTERPROCEDURAL_OPTIMIZATION TRUE)
 
 if(BUILD_SHARED_LIBS)
   set_property(TARGET lzfse APPEND PROPERTY COMPILE_DEFINITIONS LZFSE_DLL LZFSE_DLL_EXPORTS)
